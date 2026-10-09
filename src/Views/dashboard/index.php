@@ -74,3 +74,116 @@ $pageTitle = 'Dashboard';
         <?php endif; ?>
     </div>
 </div>
+
+<!-- Gráfico + Atividades -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+    <!-- Gráfico físico x financeiro -->
+    <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-5">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h3 class="text-sm font-semibold text-white">Progresso Físico x Financeiro</h3>
+                <p class="text-xs text-slate-500">Últimas 5 obras (%)</p>
+            </div>
+            <div class="flex items-center gap-4 text-xs">
+                <span class="flex items-center gap-1.5 text-slate-400"><span class="w-3 h-3 rounded-sm bg-blue-500"></span> Físico</span>
+                <span class="flex items-center gap-1.5 text-slate-400"><span class="w-3 h-3 rounded-sm bg-emerald-500"></span> Financeiro</span>
+            </div>
+        </div>
+        <?php if (!$chart['temDados']): ?>
+            <p class="text-sm text-slate-500 text-center py-10">Nenhuma obra cadastrada ainda.</p>
+        <?php else: ?>
+            <div class="h-64"><canvas id="chartFisicoFinanceiro" aria-label="Gráfico de progresso físico e financeiro" role="img"></canvas></div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Últimas atividades -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+        <h3 class="text-sm font-semibold text-white mb-4">Últimas Atividades</h3>
+        <?php if (empty($atividades)): ?>
+            <p class="text-sm text-slate-500 text-center py-10">Nenhuma atividade registrada.</p>
+        <?php else: ?>
+            <ul class="space-y-3">
+                <?php foreach ($atividades as $a): ?>
+                    <li class="flex items-start gap-3">
+                        <span class="mt-1 w-2 h-2 rounded-full flex-shrink-0 <?= $a['tipo'] === 'Obra' ? 'bg-blue-500' : 'bg-emerald-500' ?>"></span>
+                        <div class="min-w-0">
+                            <p class="text-sm text-slate-300 truncate">
+                                <?= htmlspecialchars($a['item']) ?>
+                                <span class="text-slate-500">&middot;</span>
+                                <span class="font-mono text-xs text-slate-500"><?= htmlspecialchars($a['codigo']) ?></span>
+                            </p>
+                            <p class="text-xs text-slate-500 truncate"><?= htmlspecialchars($a['obra']) ?> &middot; <?= htmlspecialchars($a['quando']) ?></p>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- Diários de Obra -->
+<div class="bg-slate-900 border border-slate-800 rounded-xl p-5 mt-4">
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <h3 class="text-sm font-semibold text-white">Diários de Obra</h3>
+            <p class="text-xs text-slate-500">Últimos registros</p>
+        </div>
+    </div>
+    <?php if ($diarios === null): ?>
+        <p class="text-sm text-slate-500 text-center py-6">Módulo de Diários de Obra em desenvolvimento.</p>
+    <?php elseif (empty($diarios)): ?>
+        <p class="text-sm text-slate-500 text-center py-6">Nenhum diário registrado ainda.</p>
+    <?php else: ?>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="text-left text-xs text-slate-500 border-b border-slate-800">
+                        <th class="py-2 pr-4">Data</th>
+                        <th class="py-2 pr-4">Obra</th>
+                        <th class="py-2 pr-4">Título</th>
+                        <th class="py-2">Registrado em</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                    <?php foreach ($diarios as $d): ?>
+                        <tr class="text-slate-300">
+                            <td class="py-2.5 pr-4 font-mono text-xs"><?= htmlspecialchars($d['data']) ?></td>
+                            <td class="py-2.5 pr-4 truncate max-w-[180px]"><span class="font-mono text-xs text-slate-500"><?= htmlspecialchars($d['codigo']) ?></span> <?= htmlspecialchars($d['obra_nome']) ?></td>
+                            <td class="py-2.5 pr-4 truncate max-w-[240px]"><?= htmlspecialchars($d['titulo'] ?? '') ?></td>
+                            <td class="py-2.5 text-xs text-slate-500"><?= htmlspecialchars($d['created_at']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php if ($chart['temDados']): ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('chartFisicoFinanceiro');
+    if (!el || typeof Chart === 'undefined') return;
+    new Chart(el, {
+        type: 'bar',
+        data: {
+            labels: <?= json_encode($chart['labels']) ?>,
+            datasets: [
+                { label: 'Físico', data: <?= json_encode($chart['fisico']) ?>, backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 4 },
+                { label: 'Financeiro', data: <?= json_encode($chart['financeiro']) ?>, backgroundColor: 'rgba(16,185,129,0.7)', borderRadius: 4 }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, max: 100, ticks: { color: '#94a3b8', callback: v => v + '%' }, grid: { color: 'rgba(51,65,85,0.5)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+});
+</script>
+<?php endif; ?>
