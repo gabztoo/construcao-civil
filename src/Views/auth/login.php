@@ -2,7 +2,8 @@
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
         <!-- Logo -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold tracking-wider text-white uppercase">Hermes</h1>
+            <img src="/images/hermes.jpg" alt="Hermes" class="w-20 h-20 rounded-2xl object-cover mx-auto shadow-lg">
+            <h1 class="text-4xl font-bold tracking-wider text-white uppercase mt-4">Hermes</h1>
             <p class="text-slate-400 mt-2">Sistema de Gestão de Obras</p>
         </div>
 

@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Serve static assets from public/
+RewriteRule ^images/(.*)$ public/images/$1 [L]
+
 # Route root URL to public/index.php
 RewriteRule ^$ public/index.php [QSA,L]
 
