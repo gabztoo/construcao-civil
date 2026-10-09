@@ -47,7 +47,7 @@ abstract class Model
     {
         $data = $this->getAttributes();
         
-        if (isset($data[static::$primaryKey])) {
+        if (!empty($data[static::$primaryKey])) {
             return $this->update($data);
         }
         

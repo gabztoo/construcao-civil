@@ -22,6 +22,8 @@ require_once __DIR__ . '/../src/Modules/Auth/Controllers/AuthController.php';
 require_once __DIR__ . '/../src/Modules/Auth/Controllers/UserController.php';
 require_once __DIR__ . '/../src/Modules/Obras/Models/Obra.php';
 require_once __DIR__ . '/../src/Modules/Obras/Controllers/ObraController.php';
+require_once __DIR__ . '/../src/Modules/Obras/Models/Diario.php';
+require_once __DIR__ . '/../src/Modules/Obras/Controllers/DiarioController.php';
 require_once __DIR__ . '/../src/Modules/Dashboard/Controllers/DashboardController.php';
 
 Session::start();
@@ -42,6 +44,9 @@ $routes = [
         '/obras/{id:\d+}' => [ObraController::class, 'show'],
         '/obras/{id:\d+}/edit' => [ObraController::class, 'edit'],
         '/usuarios' => [UserController::class, 'index'],
+        '/diarios' => [DiarioController::class, 'index'],
+        '/diarios/create' => [DiarioController::class, 'create'],
+        '/diarios/{id:\d+}/edit' => [DiarioController::class, 'edit'],
         '/usuarios/create' => [UserController::class, 'create'],
         '/usuarios/{id:\d+}/edit' => [UserController::class, 'edit'],
     ],
@@ -51,6 +56,9 @@ $routes = [
         '/obras/{id:\d+}' => [ObraController::class, 'update'],
         '/obras/{id:\d+}/delete' => [ObraController::class, 'destroy'],
         '/usuarios' => [UserController::class, 'store'],
+        '/diarios' => [DiarioController::class, 'store'],
+        '/diarios/{id:\d+}' => [DiarioController::class, 'update'],
+        '/diarios/{id:\d+}/delete' => [DiarioController::class, 'destroy'],
         '/usuarios/{id:\d+}' => [UserController::class, 'update'],
         '/usuarios/{id:\d+}/toggle' => [UserController::class, 'toggle'],
         '/usuarios/{id:\d+}/delete' => [UserController::class, 'destroy'],
