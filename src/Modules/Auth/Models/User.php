@@ -1,5 +1,7 @@
 <?php
 
+if (!class_exists('User')):
+
 class User extends Model
 {
     protected static string $table = 'usuarios';
@@ -46,3 +48,5 @@ class User extends Model
         return Auth::getInstance()->can($permission);
     }
 }
+
+endif;
