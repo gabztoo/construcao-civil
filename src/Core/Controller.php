@@ -11,7 +11,20 @@ abstract class Controller
             App::abort(500, "View not found: {$path}");
         }
 
+        ob_start();
         require $file;
+        $content = ob_get_clean();
+
+        $layout = str_starts_with($path, 'auth/') || str_starts_with($path, 'errors/')
+            ? 'layouts/auth'
+            : 'layouts/app';
+
+        $layoutFile = __DIR__ . "/../Views/{$layout}.php";
+        if (file_exists($layoutFile)) {
+            require $layoutFile;
+        } else {
+            echo $content;
+        }
     }
 
     protected function json(array $data, int $code = 200): never
