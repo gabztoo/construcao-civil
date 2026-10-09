@@ -8,9 +8,9 @@ class Database
     {
         if (self::$instance === null) {
             $host = $_ENV['DB_HOST'] ?? 'localhost';
-            $dbname = $_ENV['DB_NAME'] ?? 'hermes';
-            $user = $_ENV['DB_USER'] ?? 'root';
-            $pass = $_ENV['DB_PASS'] ?? '';
+            $dbname = $_ENV['DB_NAME'] ?? 'u151530965_ibconstrucoes_';
+            $user = $_ENV['DB_USER'] ?? 'u151530965_ueliaquim';
+            $pass = $_ENV['DB_PASS'] ?? 'Zerotwo2099@';
             $charset = $_ENV['DB_CHARSET'] ?? 'utf8mb4';
 
             $dsn = "mysql:host={$host};dbname={$dbname};charset={$charset}";
