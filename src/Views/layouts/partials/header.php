@@ -18,7 +18,7 @@ $obrasList = Obra::query()->select(['id', 'codigo', 'nome'])->orderBy('nome', 'A
         </button>
 
         <!-- Page title / breadcrumb -->
-        <div class="flex-1 min-w-0 lg:flex-none">
+        <div class="flex-1 min-w-0">
             <h2 class="text-lg font-semibold text-white truncate"><?= $pageTitle ?? 'Hermes' ?></h2>
             <?php if (isset($breadcrumb)): ?>
                 <nav class="hidden sm:flex items-center gap-1 mt-0.5 text-sm" aria-label="Breadcrumb">
@@ -37,7 +37,7 @@ $obrasList = Obra::query()->select(['id', 'codigo', 'nome'])->orderBy('nome', 'A
             <?php endif; ?>
         </div>
 
-        <div class="flex items-center gap-2 lg:gap-4">
+        <div class="flex items-center gap-2 lg:gap-4 flex-shrink-0">
             <!-- Quick search -->
             <form method="GET" action="/obras" class="hidden md:block" role="search">
                 <div class="relative">
@@ -49,7 +49,7 @@ $obrasList = Obra::query()->select(['id', 'codigo', 'nome'])->orderBy('nome', 'A
             </form>
 
             <!-- Selected obra indicator -->
-            <div class="hidden lg:block" x-data="{ obraOpen: false }" @click.outside="obraOpen = false">
+            <div class="hidden lg:block relative" x-data="{ obraOpen: false }" @click.outside="obraOpen = false">
                 <button @click="obraOpen = !obraOpen" type="button" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700 text-sm text-slate-300 transition-colors max-w-[220px]" aria-label="Obra selecionada">
                     <svg class="w-4 h-4 flex-shrink-0 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -59,7 +59,7 @@ $obrasList = Obra::query()->select(['id', 'codigo', 'nome'])->orderBy('nome', 'A
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
-                <div x-show="obraOpen" x-transition.opacity.duration.150ms class="absolute right-48 mt-2 w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden z-40" style="display: none;">
+                <div x-show="obraOpen" x-transition.opacity.duration.150ms class="absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-xl overflow-hidden z-40" style="display: none;">
                     <div class="max-h-72 overflow-y-auto divide-y divide-slate-800">
                         <?php if (empty($obrasList)): ?>
                             <p class="px-4 py-3 text-sm text-slate-500">Nenhuma obra cadastrada ainda.</p>
