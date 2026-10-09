@@ -8,9 +8,11 @@ abstract class Controller
         $file = __DIR__ . "/../../Views/{$path}.php";
         
         if (!file_exists($file)) {
-            $srcDir = __DIR__ . "/../";
-            $listing = is_dir($srcDir) ? implode(', ', scandir($srcDir)) : 'NAO EXISTE';
-            App::abort(500, "View not found: {$path}\nFile: {$file}\nsrc/ contem: {$listing}");
+            $viewsDir = __DIR__ . "/../../Views/";
+            $listing = is_dir($viewsDir) ? implode(', ', scandir($viewsDir)) : 'NAO EXISTE';
+            $authDir = $viewsDir . 'auth/';
+            $authListing = is_dir($authDir) ? implode(', ', scandir($authDir)) : 'NAO EXISTE';
+            App::abort(500, "View not found: {$path}\nViews/: {$listing}\nauth/: {$authListing}");
         }
 
         require $file;
