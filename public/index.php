@@ -31,6 +31,8 @@ require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Funcionario.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Alocacao.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/FuncionarioController.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/AlocacaoController.php';
+require_once __DIR__ . '/../src/Modules/Almoxarifado/Models/Material.php';
+require_once __DIR__ . '/../src/Modules/Almoxarifado/Controllers/AlmoxarifadoController.php';
 
 Session::start();
 
@@ -62,6 +64,7 @@ $routes = [
         '/alocacoes' => [AlocacaoController::class, 'index'],
         '/alocacoes/create' => [AlocacaoController::class, 'create'],
         '/alocacoes/{id:\d+}/edit' => [AlocacaoController::class, 'edit'],
+        '/almoxarifado' => [AlmoxarifadoController::class, 'index'],
         '/usuarios/create' => [UserController::class, 'create'],
         '/usuarios/{id:\d+}/edit' => [UserController::class, 'edit'],
     ],
@@ -83,6 +86,9 @@ $routes = [
         '/alocacoes' => [AlocacaoController::class, 'store'],
         '/alocacoes/{id:\d+}' => [AlocacaoController::class, 'update'],
         '/alocacoes/{id:\d+}/delete' => [AlocacaoController::class, 'destroy'],
+        '/almoxarifado' => [AlmoxarifadoController::class, 'store'],
+        '/almoxarifado/movimentacao' => [AlmoxarifadoController::class, 'movimentacao'],
+        '/almoxarifado/{id:\d+}' => [AlmoxarifadoController::class, 'update'],
         '/usuarios/{id:\d+}' => [UserController::class, 'update'],
         '/usuarios/{id:\d+}/toggle' => [UserController::class, 'toggle'],
         '/usuarios/{id:\d+}/delete' => [UserController::class, 'destroy'],
