@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('log_errors', '1');
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
@@ -66,8 +70,15 @@ $matched = matchRoute($method, $uri, $routes);
 if ($matched) {
     [$handler, $params] = $matched;
     [$controllerClass, $methodName] = $handler;
-    $controller = new $controllerClass();
-    $controller->$methodName(...$params);
+    try {
+        $controller = new $controllerClass();
+        $controller->$methodName(...$params);
+    } catch (\Throwable $e) {
+        error_log("ERRO FATAL: " . $e->getMessage() . " em " . $e->getFile() . ":" . $e->getLine());
+        error_log($e->getTraceAsString());
+        http_response_code(500);
+        echo "<h1>Error 500</h1><pre>" . htmlspecialchars($e->getMessage()) . "\n" . htmlspecialchars($e->getFile()) . ":" . $e->getLine() . "</pre>";
+    }
     exit;
 }
 

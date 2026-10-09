@@ -14,7 +14,8 @@ class App
 
     public static function isDebug(): bool
     {
-        return self::env('APP_DEBUG', false) === true;
+        $value = self::env('APP_DEBUG', false);
+        return $value === true || $value === 'true' || $value === '1';
     }
 
     public static function url(string $path = ''): string
