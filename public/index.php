@@ -19,6 +19,7 @@ require_once __DIR__ . '/../src/Core/Session.php';
 require_once __DIR__ . '/../src/Core/Auth.php';
 require_once __DIR__ . '/../src/Core/Validator.php';
 require_once __DIR__ . '/../src/Modules/Auth/Controllers/AuthController.php';
+require_once __DIR__ . '/../src/Modules/Auth/Controllers/UserController.php';
 require_once __DIR__ . '/../src/Modules/Obras/Models/Obra.php';
 require_once __DIR__ . '/../src/Modules/Obras/Controllers/ObraController.php';
 
@@ -39,12 +40,19 @@ $routes = [
         '/obras/create' => [ObraController::class, 'create'],
         '/obras/{id:\d+}' => [ObraController::class, 'show'],
         '/obras/{id:\d+}/edit' => [ObraController::class, 'edit'],
+        '/usuarios' => [UserController::class, 'index'],
+        '/usuarios/create' => [UserController::class, 'create'],
+        '/usuarios/{id:\d+}/edit' => [UserController::class, 'edit'],
     ],
     'POST' => [
         '/login' => [AuthController::class, 'login'],
         '/obras' => [ObraController::class, 'store'],
         '/obras/{id:\d+}' => [ObraController::class, 'update'],
         '/obras/{id:\d+}/delete' => [ObraController::class, 'destroy'],
+        '/usuarios' => [UserController::class, 'store'],
+        '/usuarios/{id:\d+}' => [UserController::class, 'update'],
+        '/usuarios/{id:\d+}/toggle' => [UserController::class, 'toggle'],
+        '/usuarios/{id:\d+}/delete' => [UserController::class, 'destroy'],
     ],
 ];
 

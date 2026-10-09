@@ -18,7 +18,7 @@ class User extends Model
     public string $email = '';
     public string $senha_hash = '';
     public string $papel = 'engenheiro';
-    public bool $ativo = true;
+    public $ativo = true;
     public ?string $ultimo_login = null;
     public string $created_at = '';
     public string $updated_at = '';
