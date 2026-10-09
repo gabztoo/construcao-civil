@@ -4,8 +4,8 @@ if (!class_exists('User')):
 
 class User extends Model
 {
-    protected static string $table = 'usuarios';
-    protected static string $primaryKey = 'id';
+    public static string $table = 'usuarios';
+    public static string $primaryKey = 'id';
     
     protected array $fillable = [
         'nome', 'email', 'senha_hash', 'papel', 'ativo'

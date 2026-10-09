@@ -2,8 +2,8 @@
 
 abstract class Model
 {
-    protected static string $table = '';
-    protected static string $primaryKey = 'id';
+    public static string $table = '';
+    public static string $primaryKey = 'id';
     protected array $fillable = [];
     protected array $hidden = ['senha_hash'];
     protected array $casts = [];

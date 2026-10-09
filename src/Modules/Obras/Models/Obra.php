@@ -2,8 +2,8 @@
 
 class Obra extends Model
 {
-    protected static string $table = 'obras';
-    protected static string $primaryKey = 'id';
+    public static string $table = 'obras';
+    public static string $primaryKey = 'id';
     
     protected array $fillable = [
         'codigo', 'nome', 'cliente_id', 'endereco', 'latitude', 'longitude',
