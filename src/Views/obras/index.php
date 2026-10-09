@@ -1,5 +1,5 @@
 <?php
-$currentRoute = 'obras';
+$currentRoute = str_starts_with(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '', '/dashboard') ? 'dashboard' : 'obras';
 $pageTitle = 'Obras';
 $breadcrumb = [
     ['label' => 'Obras'],
