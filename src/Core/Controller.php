@@ -5,14 +5,10 @@ abstract class Controller
     protected function view(string $path, array $data = []): void
     {
         extract($data);
-        $file = __DIR__ . "/../../Views/{$path}.php";
+        $file = __DIR__ . "/../Views/{$path}.php";
         
         if (!file_exists($file)) {
-            $viewsDir = __DIR__ . "/../../Views/";
-            $listing = is_dir($viewsDir) ? implode(', ', scandir($viewsDir)) : 'NAO EXISTE';
-            $authDir = $viewsDir . 'auth/';
-            $authListing = is_dir($authDir) ? implode(', ', scandir($authDir)) : 'NAO EXISTE';
-            App::abort(500, "View not found: {$path}\nViews/: {$listing}\nauth/: {$authListing}");
+            App::abort(500, "View not found: {$path}");
         }
 
         require $file;
