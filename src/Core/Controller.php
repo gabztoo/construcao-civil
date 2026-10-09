@@ -8,7 +8,15 @@ abstract class Controller
         $file = __DIR__ . "/../../Views/{$path}.php";
         
         if (!file_exists($file)) {
-            App::abort(500, "View not found: {$path}");
+            error_log("VIEW NAO ENCONTRADA: {$file}");
+            error_log("__DIR__: " . __DIR__);
+            error_log("cwd: " . getcwd());
+            $viewsDir = __DIR__ . "/../../Views/";
+            error_log("Views dir existe: " . (is_dir($viewsDir) ? 'SIM' : 'NAO'));
+            if (is_dir($viewsDir)) {
+                error_log("Conteudo: " . implode(', ', scandir($viewsDir)));
+            }
+            App::abort(500, "View not found: {$path}\nFile: {$file}\nDir exists: " . (is_dir($viewsDir) ? 'yes' : 'no'));
         }
 
         require $file;
