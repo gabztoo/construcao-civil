@@ -35,6 +35,9 @@ require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/FuncionarioControl
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/AlocacaoController.php';
 require_once __DIR__ . '/../src/Modules/Almoxarifado/Models/Material.php';
 require_once __DIR__ . '/../src/Modules/Almoxarifado/Controllers/AlmoxarifadoController.php';
+require_once __DIR__ . '/../src/Modules/Financeiro/Models/CategoriaFinanceira.php';
+require_once __DIR__ . '/../src/Modules/Financeiro/Models/LancamentoFinanceiro.php';
+require_once __DIR__ . '/../src/Modules/Financeiro/Controllers/FinanceiroController.php';
 
 Session::start();
 
@@ -67,6 +70,8 @@ $routes = [
         '/alocacoes/create' => [AlocacaoController::class, 'create'],
         '/alocacoes/{id:\d+}/edit' => [AlocacaoController::class, 'edit'],
         '/almoxarifado' => [AlmoxarifadoController::class, 'index'],
+        '/financeiro' => [FinanceiroController::class, 'index'],
+        '/financeiro/relatorios' => [FinanceiroController::class, 'relatorios'],
         '/usuarios/create' => [UserController::class, 'create'],
         '/usuarios/{id:\d+}/edit' => [UserController::class, 'edit'],
     ],
@@ -95,6 +100,8 @@ $routes = [
         '/almoxarifado' => [AlmoxarifadoController::class, 'store'],
         '/almoxarifado/movimentacao' => [AlmoxarifadoController::class, 'movimentacao'],
         '/almoxarifado/{id:\d+}' => [AlmoxarifadoController::class, 'update'],
+        '/financeiro' => [FinanceiroController::class, 'store'],
+        '/financeiro/{id:\d+}/baixar' => [FinanceiroController::class, 'baixarLancamento'],
         '/usuarios/{id:\d+}' => [UserController::class, 'update'],
         '/usuarios/{id:\d+}/toggle' => [UserController::class, 'toggle'],
         '/usuarios/{id:\d+}/delete' => [UserController::class, 'destroy'],

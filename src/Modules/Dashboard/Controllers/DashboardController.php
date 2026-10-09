@@ -24,6 +24,22 @@ class DashboardController extends Controller
             }
         }
 
+        if ($this->tableExists('lancamentos_financeiros')) {
+            try {
+                $despesas = (float) $pdo->query(
+                    "SELECT COALESCE(SUM(lf.valor), 0) t
+                     FROM lancamentos_financeiros lf
+                     INNER JOIN obras o ON o.id = lf.obra_id
+                     WHERE lf.tipo = 'despesa' AND lf.status IN ('pago','pendente','atrasado')
+                       AND o.status IN ('em_andamento','atrasada')"
+                )->fetch()['t'];
+                if ($despesas > 0) {
+                    $realizado = max($realizado, $despesas);
+                }
+            } catch (Throwable $e) {
+            }
+        }
+
         $alocacao = null;
         if ($this->tableExists('alocacoes')) {
             try {

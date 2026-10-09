@@ -37,7 +37,22 @@ foreach ($files as $file) {
         
         foreach ($statements as $statement) {
             if (!empty($statement)) {
-                $pdo->exec($statement);
+                try {
+                    $pdo->exec($statement);
+                } catch (PDOException $e) {
+                    $msg = $e->getMessage();
+                    $ignoraveis = ['Duplicate column name', 'Duplicate key name', 'Already exists', 'Duplicate foreign key constraint', 'check that column/key exists', 'Database exists', 'errno: 121', 'errno 121'];
+                    $isDuplicado = false;
+                    foreach ($ignoraveis as $ign) {
+                        if (stripos($msg, $ign) !== false) {
+                            $isDuplicado = true;
+                            break;
+                        }
+                    }
+                    if (!$isDuplicado) {
+                        throw $e;
+                    }
+                }
             }
         }
         
