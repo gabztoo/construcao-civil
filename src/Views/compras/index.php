@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $currentRoute = 'compras';
 $pageTitle = 'Compras';
 $breadcrumb = [
@@ -38,14 +38,10 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
     materialChanged(i) {
         const id = this.itens[i].material_id;
         if (!id) return;
-        const sel = document.querySelector('#itens_material_' + i);
-        if (!sel) return;
-        for (const opt of sel.options) {
-            if (opt.value == id && opt.dataset.nome && !this.itens[i].descricao) {
-                this.itens[i].descricao = opt.dataset.nome;
-                break;
-            }
-        }
+        const sel = document.getElementById('itens_material_' + i);
+        let nome = '';
+        if (sel) { for (const opt of sel.options) { if (opt.value === id) { nome = opt.dataset.nome || ''; break; } } }
+        if (nome && !this.itens[i].descricao) this.itens[i].descricao = nome;
     }
 }">
 
@@ -96,7 +92,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                         <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Buscar por cÃ³digo, fornecedor ou obra..." class="input-field pl-10">
+                        <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Buscar por código, fornecedor ou obra..." class="input-field pl-10">
                     </div>
                     <select name="status" class="input-field sm:w-44">
                         <option value="">Todos os status</option>
@@ -115,12 +111,12 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                 <table class="w-full">
                     <thead class="bg-slate-800/50">
                         <tr class="text-left text-sm text-slate-400">
-                            <th class="px-4 py-3 font-medium">CÃ³digo</th>
+                            <th class="px-4 py-3 font-medium">Código</th>
                             <th class="px-4 py-3 font-medium hidden md:table-cell">Obra</th>
                             <th class="px-4 py-3 font-medium">Fornecedor</th>
                             <th class="px-4 py-3 font-medium">Valor</th>
                             <th class="px-4 py-3 font-medium">Status</th>
-                            <th class="px-4 py-3 font-medium text-right">AÃ§Ãµes</th>
+                            <th class="px-4 py-3 font-medium text-right">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-800">
@@ -145,7 +141,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                                         <p class="text-sm text-white truncate max-w-[160px]"><?= htmlspecialchars($oc->obra_nome) ?></p>
                                     </td>
                                     <td class="px-4 py-4 text-sm text-slate-300 truncate max-w-[180px]">
-                                        <?= htmlspecialchars($oc->fornecedor_nome ?: $oc->fornecedor ?: 'â€”') ?>
+                                        <?= htmlspecialchars($oc->fornecedor_nome ?: $oc->fornecedor ?: '—') ?>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
                                         R$ <?= number_format((float) $oc->valor_total, 2, ',', '.') ?>
@@ -161,7 +157,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                                                 <form method="POST" action="/compras/<?= $oc->id ?>/status" class="inline">
                                                     <input type="hidden" name="_token" value="<?= App::csrfToken() ?>">
                                                     <input type="hidden" name="status" value="aprovada">
-                                                    <button type="submit" class="p-2 rounded-lg hover:bg-emerald-900/30 text-slate-400 hover:text-emerald-400 transition-colors" title="AprovaÃ§Ã£o rÃ¡pida">
+                                                    <button type="submit" class="p-2 rounded-lg hover:bg-emerald-900/30 text-slate-400 hover:text-emerald-400 transition-colors" title="Aprovação rápida">
                                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                                         </svg>
@@ -183,7 +179,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                 </svg>
                                             </a>
-                                            <form method="POST" action="/compras/<?= $oc->id ?>/delete" onsubmit="return confirm('Excluir a ordem de compra <?= htmlspecialchars(addslashes($oc->codigo_oc ?: $oc->numero)) ?>? Esta aÃ§Ã£o nÃ£o pode ser desfeita.')" class="inline">
+                                            <form method="POST" action="/compras/<?= $oc->id ?>/delete" onsubmit="return confirm('Excluir a ordem de compra <?= htmlspecialchars(addslashes($oc->codigo_oc ?: $oc->numero)) ?>? Esta ação não pode ser desfeita.')" class="inline">
                                                 <input type="hidden" name="_token" value="<?= App::csrfToken() ?>">
                                                 <button type="submit" class="p-2 rounded-lg hover:bg-red-900/20 text-slate-400 hover:text-red-400 transition-colors" title="Excluir">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,7 +204,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                     </p>
                     <div class="flex items-center gap-1">
                         <?php if ($pagination['current_page'] > 1): ?>
-                            <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($statusFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€¹</a>
+                            <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($statusFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">‹</a>
                         <?php endif; ?>
                         <?php for ($i = 1; $i <= $pagination['last_page']; $i++): ?>
                             <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($statusFilter) ?>"
@@ -217,7 +213,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                             </a>
                         <?php endfor; ?>
                         <?php if ($pagination['current_page'] < $pagination['last_page']): ?>
-                            <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($statusFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€º</a>
+                            <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&status=<?= urlencode($statusFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">›</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -241,13 +237,13 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                 <table class="w-full">
                     <thead class="bg-slate-800/50">
                         <tr class="text-left text-sm text-slate-400">
-                            <th class="px-4 py-3 font-medium">RazÃ£o Social</th>
+                            <th class="px-4 py-3 font-medium">Razão Social</th>
                             <th class="px-4 py-3 font-medium">CNPJ/CPF</th>
                             <th class="px-4 py-3 font-medium hidden md:table-cell">Contato</th>
                             <th class="px-4 py-3 font-medium hidden lg:table-cell">Telefone</th>
                             <th class="px-4 py-3 font-medium hidden lg:table-cell">Email</th>
                             <th class="px-4 py-3 font-medium hidden md:table-cell">Categoria</th>
-                            <th class="px-4 py-3 font-medium text-right">AÃ§Ãµes</th>
+                            <th class="px-4 py-3 font-medium text-right">Ações</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-800">
@@ -263,14 +259,14 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                                 <tr class="hover:bg-slate-800/50 transition-colors">
                                     <td class="px-4 py-4 text-sm font-medium text-white truncate max-w-[200px]"><?= htmlspecialchars($f->razao_social) ?></td>
                                     <td class="px-4 py-4 font-mono text-sm text-slate-300"><?= htmlspecialchars($f->cnpj_cpf) ?></td>
-                                    <td class="px-4 py-4 hidden md:table-cell text-sm text-slate-400"><?= htmlspecialchars($f->contato_nome ?: 'â€”') ?></td>
-                                    <td class="px-4 py-4 hidden lg:table-cell text-sm text-slate-400"><?= htmlspecialchars($f->telefone ?: 'â€”') ?></td>
-                                    <td class="px-4 py-4 hidden lg:table-cell text-sm text-slate-400 truncate max-w-[180px]"><?= htmlspecialchars($f->email ?: 'â€”') ?></td>
+                                    <td class="px-4 py-4 hidden md:table-cell text-sm text-slate-400"><?= htmlspecialchars($f->contato_nome ?: '—') ?></td>
+                                    <td class="px-4 py-4 hidden lg:table-cell text-sm text-slate-400"><?= htmlspecialchars($f->telefone ?: '—') ?></td>
+                                    <td class="px-4 py-4 hidden lg:table-cell text-sm text-slate-400 truncate max-w-[180px]"><?= htmlspecialchars($f->email ?: '—') ?></td>
                                     <td class="px-4 py-4 hidden md:table-cell">
                                         <?php if ($f->categoria): ?>
                                             <span class="badge bg-slate-700/50 text-slate-300"><?= htmlspecialchars($categoriasFornecedor[$f->categoria] ?? $f->categoria) ?></span>
                                         <?php else: ?>
-                                            <span class="text-slate-600">â€”</span>
+                                            <span class="text-slate-600">—</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="px-4 py-4 text-right">
@@ -324,7 +320,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                        <label for="oc_codigo" class="label-field">CÃ³digo da OC <span class="text-red-400">*</span></label>
+                        <label for="oc_codigo" class="label-field">Código da OC <span class="text-red-400">*</span></label>
                         <input type="text" id="oc_codigo" name="codigo_oc" class="input-field" placeholder="Ex: OC-2026-001" required maxlength="30">
                         <?php if ($err = $errors['codigo_oc'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
@@ -386,7 +382,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                                 </select>
                             </div>
                             <div class="col-span-12 sm:col-span-4">
-                                <input type="text" :name="'itens[descricao][' + i + ']'" x-model="item.descricao" class="input-field !py-2" placeholder="DescriÃ§Ã£o" maxlength="200">
+                                <input type="text" :name="'itens[descricao][' + i + ']'" x-model="item.descricao" class="input-field !py-2" placeholder="Descrição" maxlength="200">
                             </div>
                             <div class="col-span-6 sm:col-span-2">
                                 <input type="number" :name="'itens[quantidade][' + i + ']'" x-model="item.quantidade" class="input-field !py-2" placeholder="Qtd." min="0.001" step="0.001" required>
@@ -409,8 +405,8 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                 </div>
 
                 <div>
-                    <label for="oc_obs" class="label-field">ObservaÃ§Ãµes</label>
-                    <textarea id="oc_obs" name="observacoes" class="input-field" rows="3" maxlength="2000" placeholder="CondiÃ§Ãµes de pagamento, prazos..."></textarea>
+                    <label for="oc_obs" class="label-field">Observações</label>
+                    <textarea id="oc_obs" name="observacoes" class="input-field" rows="3" maxlength="2000" placeholder="Condições de pagamento, prazos..."></textarea>
                 </div>
 
                 <div class="flex gap-3 pt-4 border-t border-slate-700">
@@ -437,7 +433,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                 <input type="hidden" name="_token" value="<?= App::csrfToken() ?>">
 
                 <div>
-                    <label for="f_razao" class="label-field">RazÃ£o Social <span class="text-red-400">*</span></label>
+                    <label for="f_razao" class="label-field">Razão Social <span class="text-red-400">*</span></label>
                     <input type="text" id="f_razao" name="razao_social" x-model="forn.razao_social" class="input-field" required maxlength="150">
                     <?php if ($err = $errors['razao_social'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
@@ -466,7 +462,7 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label for="f_contato" class="label-field">Contato</label>
-                        <input type="text" id="f_contato" name="contato_nome" x-model="forn.contato_nome" class="input-field" maxlength="100" placeholder="Nome do responsÃ¡vel">
+                        <input type="text" id="f_contato" name="contato_nome" x-model="forn.contato_nome" class="input-field" maxlength="100" placeholder="Nome do responsável">
                     </div>
                     <div>
                         <label for="f_tel" class="label-field">Telefone</label>

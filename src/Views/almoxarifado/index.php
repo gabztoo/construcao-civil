@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $currentRoute = 'almoxarifado';
 $pageTitle = 'Almoxarifado';
 $breadcrumb = [
@@ -83,9 +83,9 @@ $errors = Session::getErrors();
                         <th class="px-4 py-3 font-medium hidden md:table-cell">Categoria</th>
                         <th class="px-4 py-3 font-medium">Un.</th>
                         <th class="px-4 py-3 font-medium">Saldo Total</th>
-                        <th class="px-4 py-3 font-medium hidden md:table-cell">Est. MÃ­nimo</th>
+                        <th class="px-4 py-3 font-medium hidden md:table-cell">Est. Mínimo</th>
                         <th class="px-4 py-3 font-medium">Status</th>
-                        <th class="px-4 py-3 font-medium text-right">AÃ§Ãµes</th>
+                        <th class="px-4 py-3 font-medium text-right">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800">
@@ -105,7 +105,7 @@ $errors = Session::getErrors();
                                 $label = 'Estoque baixo';
                             } elseif ($min > 0 && $saldo < $min * 1.5) {
                                 $badge = 'bg-amber-900/50 text-amber-300';
-                                $label = 'AtenÃ§Ã£o';
+                                $label = 'Atenção';
                             } else {
                                 $badge = 'bg-emerald-900/50 text-emerald-300';
                                 $label = 'Normal';
@@ -165,7 +165,7 @@ $errors = Session::getErrors();
                 </p>
                 <div class="flex items-center gap-1">
                     <?php if ($pagination['current_page'] > 1): ?>
-                        <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€¹</a>
+                        <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">‹</a>
                     <?php endif; ?>
                     <?php for ($i = 1; $i <= $pagination['last_page']; $i++): ?>
                         <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>"
@@ -174,17 +174,17 @@ $errors = Session::getErrors();
                         </a>
                     <?php endfor; ?>
                     <?php if ($pagination['current_page'] < $pagination['last_page']): ?>
-                        <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€º</a>
+                        <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">›</a>
                     <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
     </div>
 
-    <!-- Ãšltimas movimentaÃ§Ãµes -->
+    <!-- Últimas movimentações -->
     <div class="table-container">
         <div class="p-4 border-b border-slate-700">
-            <h2 class="text-sm font-semibold text-white">Ãšltimas MovimentaÃ§Ãµes</h2>
+            <h2 class="text-sm font-semibold text-white">Últimas Movimentações</h2>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full">
@@ -195,13 +195,13 @@ $errors = Session::getErrors();
                         <th class="px-4 py-3 font-medium">Material</th>
                         <th class="px-4 py-3 font-medium">Qtd.</th>
                         <th class="px-4 py-3 font-medium hidden md:table-cell">Obra</th>
-                        <th class="px-4 py-3 font-medium hidden lg:table-cell">UsuÃ¡rio</th>
+                        <th class="px-4 py-3 font-medium hidden lg:table-cell">Usuário</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800">
                     <?php if (empty($ultimasMovs)): ?>
                         <tr>
-                            <td colspan="6" class="px-4 py-8 text-center text-slate-500">Nenhuma movimentaÃ§Ã£o registrada.</td>
+                            <td colspan="6" class="px-4 py-8 text-center text-slate-500">Nenhuma movimentação registrada.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($ultimasMovs as $mv): ?>
@@ -211,9 +211,9 @@ $errors = Session::getErrors();
                                     <?php if ($mv->tipo === 'entrada'): ?>
                                         <span class="badge bg-emerald-900/50 text-emerald-300">Entrada</span>
                                     <?php elseif ($mv->tipo === 'saida'): ?>
-                                        <span class="badge bg-red-900/50 text-red-300">SaÃ­da</span>
+                                        <span class="badge bg-red-900/50 text-red-300">Saída</span>
                                     <?php else: ?>
-                                        <span class="badge bg-blue-900/50 text-blue-300">TransferÃªncia</span>
+                                        <span class="badge bg-blue-900/50 text-blue-300">Transferência</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="px-4 py-3 text-sm text-white truncate max-w-[200px]">
@@ -228,7 +228,7 @@ $errors = Session::getErrors();
                                     <span class="font-mono text-xs text-slate-500"><?= htmlspecialchars($mv->obra_codigo) ?></span> <?= htmlspecialchars($mv->obra_nome) ?>
                                 </td>
                                 <td class="px-4 py-3 hidden lg:table-cell text-sm text-slate-400">
-                                    <?= htmlspecialchars($mv->usuario_nome ?: 'â€”') ?>
+                                    <?= htmlspecialchars($mv->usuario_nome ?: '—') ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -238,7 +238,7 @@ $errors = Session::getErrors();
         </div>
     </div>
 
-    <!-- Modal Material (cadastro/ediÃ§Ã£o) -->
+    <!-- Modal Material (cadastro/edição) -->
     <div x-show="materialModal" x-transition.opacity.duration.150ms class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/60" @click="materialModal = false"></div>
         <div x-transition class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -255,14 +255,14 @@ $errors = Session::getErrors();
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                        <label for="m_sku" class="label-field">SKU/CÃ³digo <span class="text-red-400">*</span></label>
+                        <label for="m_sku" class="label-field">SKU/Código <span class="text-red-400">*</span></label>
                         <input type="text" id="m_sku" name="codigo_sku" x-model="mat.codigo_sku" class="input-field" placeholder="Ex: MAT-001" required maxlength="30">
                         <?php if ($err = $errors['codigo_sku'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
                     <div>
-                        <label for="m_min" class="label-field">Estoque MÃ­nimo <span class="text-red-400">*</span></label>
+                        <label for="m_min" class="label-field">Estoque Mínimo <span class="text-red-400">*</span></label>
                         <input type="number" id="m_min" name="estoque_minimo" x-model="mat.estoque_minimo" class="input-field" min="0" step="0.001" required>
                         <?php if ($err = $errors['estoque_minimo'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
@@ -272,7 +272,7 @@ $errors = Session::getErrors();
 
                 <div>
                     <label for="m_nome" class="label-field">Nome <span class="text-red-400">*</span></label>
-                    <input type="text" id="m_nome" name="nome" x-model="mat.nome" class="input-field" placeholder="Ex: Cabo flexÃ­vel 2,5mm" required maxlength="120">
+                    <input type="text" id="m_nome" name="nome" x-model="mat.nome" class="input-field" placeholder="Ex: Cabo flexível 2,5mm" required maxlength="120">
                     <?php if ($err = $errors['nome'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
@@ -313,12 +313,12 @@ $errors = Session::getErrors();
         </div>
     </div>
 
-    <!-- Modal MovimentaÃ§Ã£o -->
+    <!-- Modal Movimentação -->
     <div x-show="movModal" x-transition.opacity.duration.150ms class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/60" @click="movModal = false"></div>
         <div x-transition class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl shadow-2xl">
             <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
-                <h3 class="text-lg font-semibold text-white">Registrar MovimentaÃ§Ã£o</h3>
+                <h3 class="text-lg font-semibold text-white">Registrar Movimentação</h3>
                 <button type="button" @click="movModal = false" class="p-2 rounded-lg hover:bg-slate-800 text-slate-400" aria-label="Fechar">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -359,7 +359,7 @@ $errors = Session::getErrors();
                         <label for="mv_tipo" class="label-field">Tipo <span class="text-red-400">*</span></label>
                         <select id="mv_tipo" name="tipo" x-model="mov.tipo" class="input-field" required>
                             <option value="entrada">Entrada</option>
-                            <option value="saida">SaÃ­da</option>
+                            <option value="saida">Saída</option>
                         </select>
                     </div>
                     <div>
@@ -372,8 +372,8 @@ $errors = Session::getErrors();
                 </div>
 
                 <div>
-                    <label for="mv_obs" class="label-field">ObservaÃ§Ã£o</label>
-                    <textarea id="mv_obs" name="observacao" x-model="mov.observacao" class="input-field" rows="3" maxlength="500" placeholder="Ex: NF 12345, consumo no serviÃ§o de alvenaria"></textarea>
+                    <label for="mv_obs" class="label-field">Observação</label>
+                    <textarea id="mv_obs" name="observacao" x-model="mov.observacao" class="input-field" rows="3" maxlength="500" placeholder="Ex: NF 12345, consumo no serviço de alvenaria"></textarea>
                     <?php if ($err = $errors['observacao'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
