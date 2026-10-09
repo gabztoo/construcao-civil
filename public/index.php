@@ -18,7 +18,6 @@ require_once __DIR__ . '/../src/Core/Response.php';
 require_once __DIR__ . '/../src/Core/Session.php';
 require_once __DIR__ . '/../src/Core/Auth.php';
 require_once __DIR__ . '/../src/Core/Validator.php';
-require_once __DIR__ . '/../src/Modules/Auth/Models/User.php';
 require_once __DIR__ . '/../src/Modules/Auth/Controllers/AuthController.php';
 require_once __DIR__ . '/../src/Modules/Obras/Models/Obra.php';
 require_once __DIR__ . '/../src/Modules/Obras/Controllers/ObraController.php';
