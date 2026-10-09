@@ -27,6 +27,10 @@ require_once __DIR__ . '/../src/Modules/Obras/Controllers/DiarioController.php';
 require_once __DIR__ . '/../src/Modules/Dashboard/Controllers/DashboardController.php';
 require_once __DIR__ . '/../src/Modules/Compras/Models/OrdemCompra.php';
 require_once __DIR__ . '/../src/Modules/Compras/Controllers/OrdemCompraController.php';
+require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Funcionario.php';
+require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Alocacao.php';
+require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/FuncionarioController.php';
+require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/AlocacaoController.php';
 
 Session::start();
 
@@ -52,6 +56,12 @@ $routes = [
         '/compras' => [OrdemCompraController::class, 'index'],
         '/compras/create' => [OrdemCompraController::class, 'create'],
         '/compras/{id:\d+}/edit' => [OrdemCompraController::class, 'edit'],
+        '/funcionarios' => [FuncionarioController::class, 'index'],
+        '/funcionarios/create' => [FuncionarioController::class, 'create'],
+        '/funcionarios/{id:\d+}/edit' => [FuncionarioController::class, 'edit'],
+        '/alocacoes' => [AlocacaoController::class, 'index'],
+        '/alocacoes/create' => [AlocacaoController::class, 'create'],
+        '/alocacoes/{id:\d+}/edit' => [AlocacaoController::class, 'edit'],
         '/usuarios/create' => [UserController::class, 'create'],
         '/usuarios/{id:\d+}/edit' => [UserController::class, 'edit'],
     ],
@@ -67,6 +77,12 @@ $routes = [
         '/compras' => [OrdemCompraController::class, 'store'],
         '/compras/{id:\d+}' => [OrdemCompraController::class, 'update'],
         '/compras/{id:\d+}/delete' => [OrdemCompraController::class, 'destroy'],
+        '/funcionarios' => [FuncionarioController::class, 'store'],
+        '/funcionarios/{id:\d+}' => [FuncionarioController::class, 'update'],
+        '/funcionarios/{id:\d+}/delete' => [FuncionarioController::class, 'destroy'],
+        '/alocacoes' => [AlocacaoController::class, 'store'],
+        '/alocacoes/{id:\d+}' => [AlocacaoController::class, 'update'],
+        '/alocacoes/{id:\d+}/delete' => [AlocacaoController::class, 'destroy'],
         '/usuarios/{id:\d+}' => [UserController::class, 'update'],
         '/usuarios/{id:\d+}/toggle' => [UserController::class, 'toggle'],
         '/usuarios/{id:\d+}/delete' => [UserController::class, 'destroy'],
