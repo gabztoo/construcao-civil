@@ -28,7 +28,7 @@ class AuthController extends Controller
             App::redirect('/dashboard');
         }
 
-        Session::setFlash('error', 'E-mail ou senha inválidos');
+        Session::putFlash('error', 'E-mail ou senha inválidos');
         App::redirect('/login');
     }
 
