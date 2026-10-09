@@ -8,15 +8,9 @@ abstract class Controller
         $file = __DIR__ . "/../../Views/{$path}.php";
         
         if (!file_exists($file)) {
-            $srcDir = __DIR__ . "/../../";
-            error_log("SRC dir: {$srcDir}");
+            $srcDir = __DIR__ . "/../";
             $listing = is_dir($srcDir) ? implode(', ', scandir($srcDir)) : 'NAO EXISTE';
-            error_log("Conteudo src/: {$listing}");
-
-            $alt = __DIR__ . "/../../views/{$path}.php";
-            error_log("Tentando lowercase views: {$alt} -> " . (file_exists($alt) ? 'EXISTE' : 'NAO'));
-
-            App::abort(500, "View not found: {$path}\nFile: {$file}\nsrc/: {$listing}\nlowercase views: " . (file_exists($alt) ? 'EXISTE' : 'NAO'));
+            App::abort(500, "View not found: {$path}\nFile: {$file}\nsrc/ contem: {$listing}");
         }
 
         require $file;
