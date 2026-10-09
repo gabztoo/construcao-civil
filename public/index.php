@@ -22,6 +22,7 @@ require_once __DIR__ . '/../src/Modules/Auth/Controllers/AuthController.php';
 require_once __DIR__ . '/../src/Modules/Auth/Controllers/UserController.php';
 require_once __DIR__ . '/../src/Modules/Obras/Models/Obra.php';
 require_once __DIR__ . '/../src/Modules/Obras/Controllers/ObraController.php';
+require_once __DIR__ . '/../src/Modules/Dashboard/Controllers/DashboardController.php';
 
 Session::start();
 
@@ -35,7 +36,7 @@ $routes = [
         '/' => [AuthController::class, 'showLogin'],
         '/login' => [AuthController::class, 'showLogin'],
         '/logout' => [AuthController::class, 'logout'],
-        '/dashboard' => [ObraController::class, 'index'],
+        '/dashboard' => [DashboardController::class, 'index'],
         '/obras' => [ObraController::class, 'index'],
         '/obras/create' => [ObraController::class, 'create'],
         '/obras/{id:\d+}' => [ObraController::class, 'show'],
