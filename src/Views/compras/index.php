@@ -38,8 +38,14 @@ $abrirAbaForn = $abrirModalForn || ($abaInicial === 'fornecedores');
     materialChanged(i) {
         const id = this.itens[i].material_id;
         if (!id) return;
-        const opt = document.querySelector('#itens_material_' + i + ' option[value=\"' + id + '\"]');
-        if (opt && opt.dataset.nome && !this.itens[i].descricao) this.itens[i].descricao = opt.dataset.nome;
+        const sel = document.querySelector('#itens_material_' + i);
+        if (!sel) return;
+        for (const opt of sel.options) {
+            if (opt.value == id && opt.dataset.nome && !this.itens[i].descricao) {
+                this.itens[i].descricao = opt.dataset.nome;
+                break;
+            }
+        }
     }
 }">
 
