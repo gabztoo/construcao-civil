@@ -1,9 +1,10 @@
-<?php
+﻿<?php
 $currentRoute = 'almoxarifado';
 $pageTitle = 'Almoxarifado';
 $breadcrumb = [
     ['label' => 'Almoxarifado'],
 ];
+$errors = Session::getErrors();
 ?>
 
 <div x-data="{
@@ -82,9 +83,9 @@ $breadcrumb = [
                         <th class="px-4 py-3 font-medium hidden md:table-cell">Categoria</th>
                         <th class="px-4 py-3 font-medium">Un.</th>
                         <th class="px-4 py-3 font-medium">Saldo Total</th>
-                        <th class="px-4 py-3 font-medium hidden md:table-cell">Est. Mínimo</th>
+                        <th class="px-4 py-3 font-medium hidden md:table-cell">Est. MÃ­nimo</th>
                         <th class="px-4 py-3 font-medium">Status</th>
-                        <th class="px-4 py-3 font-medium text-right">Ações</th>
+                        <th class="px-4 py-3 font-medium text-right">AÃ§Ãµes</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800">
@@ -104,7 +105,7 @@ $breadcrumb = [
                                 $label = 'Estoque baixo';
                             } elseif ($min > 0 && $saldo < $min * 1.5) {
                                 $badge = 'bg-amber-900/50 text-amber-300';
-                                $label = 'Atenção';
+                                $label = 'AtenÃ§Ã£o';
                             } else {
                                 $badge = 'bg-emerald-900/50 text-emerald-300';
                                 $label = 'Normal';
@@ -164,7 +165,7 @@ $breadcrumb = [
                 </p>
                 <div class="flex items-center gap-1">
                     <?php if ($pagination['current_page'] > 1): ?>
-                        <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">‹</a>
+                        <a href="?page=<?= $pagination['current_page'] - 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€¹</a>
                     <?php endif; ?>
                     <?php for ($i = 1; $i <= $pagination['last_page']; $i++): ?>
                         <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>"
@@ -173,17 +174,17 @@ $breadcrumb = [
                         </a>
                     <?php endfor; ?>
                     <?php if ($pagination['current_page'] < $pagination['last_page']): ?>
-                        <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">›</a>
+                        <a href="?page=<?= $pagination['current_page'] + 1 ?>&search=<?= urlencode($search) ?>&categoria=<?= urlencode($categoriaFilter) ?>" class="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors">â€º</a>
                     <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
     </div>
 
-    <!-- Últimas movimentações -->
+    <!-- Ãšltimas movimentaÃ§Ãµes -->
     <div class="table-container">
         <div class="p-4 border-b border-slate-700">
-            <h2 class="text-sm font-semibold text-white">Últimas Movimentações</h2>
+            <h2 class="text-sm font-semibold text-white">Ãšltimas MovimentaÃ§Ãµes</h2>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full">
@@ -194,13 +195,13 @@ $breadcrumb = [
                         <th class="px-4 py-3 font-medium">Material</th>
                         <th class="px-4 py-3 font-medium">Qtd.</th>
                         <th class="px-4 py-3 font-medium hidden md:table-cell">Obra</th>
-                        <th class="px-4 py-3 font-medium hidden lg:table-cell">Usuário</th>
+                        <th class="px-4 py-3 font-medium hidden lg:table-cell">UsuÃ¡rio</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800">
                     <?php if (empty($ultimasMovs)): ?>
                         <tr>
-                            <td colspan="6" class="px-4 py-8 text-center text-slate-500">Nenhuma movimentação registrada.</td>
+                            <td colspan="6" class="px-4 py-8 text-center text-slate-500">Nenhuma movimentaÃ§Ã£o registrada.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($ultimasMovs as $mv): ?>
@@ -210,9 +211,9 @@ $breadcrumb = [
                                     <?php if ($mv->tipo === 'entrada'): ?>
                                         <span class="badge bg-emerald-900/50 text-emerald-300">Entrada</span>
                                     <?php elseif ($mv->tipo === 'saida'): ?>
-                                        <span class="badge bg-red-900/50 text-red-300">Saída</span>
+                                        <span class="badge bg-red-900/50 text-red-300">SaÃ­da</span>
                                     <?php else: ?>
-                                        <span class="badge bg-blue-900/50 text-blue-300">Transferência</span>
+                                        <span class="badge bg-blue-900/50 text-blue-300">TransferÃªncia</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="px-4 py-3 text-sm text-white truncate max-w-[200px]">
@@ -227,7 +228,7 @@ $breadcrumb = [
                                     <span class="font-mono text-xs text-slate-500"><?= htmlspecialchars($mv->obra_codigo) ?></span> <?= htmlspecialchars($mv->obra_nome) ?>
                                 </td>
                                 <td class="px-4 py-3 hidden lg:table-cell text-sm text-slate-400">
-                                    <?= htmlspecialchars($mv->usuario_nome ?: '—') ?>
+                                    <?= htmlspecialchars($mv->usuario_nome ?: 'â€”') ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -237,7 +238,7 @@ $breadcrumb = [
         </div>
     </div>
 
-    <!-- Modal Material (cadastro/edição) -->
+    <!-- Modal Material (cadastro/ediÃ§Ã£o) -->
     <div x-show="materialModal" x-transition.opacity.duration.150ms class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/60" @click="materialModal = false"></div>
         <div x-transition class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -254,16 +255,16 @@ $breadcrumb = [
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                        <label for="m_sku" class="label-field">SKU/Código <span class="text-red-400">*</span></label>
+                        <label for="m_sku" class="label-field">SKU/CÃ³digo <span class="text-red-400">*</span></label>
                         <input type="text" id="m_sku" name="codigo_sku" x-model="mat.codigo_sku" class="input-field" placeholder="Ex: MAT-001" required maxlength="30">
-                        <?php if ($err = Session::getErrors()['codigo_sku'][0] ?? null): ?>
+                        <?php if ($err = $errors['codigo_sku'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
                     <div>
-                        <label for="m_min" class="label-field">Estoque Mínimo <span class="text-red-400">*</span></label>
+                        <label for="m_min" class="label-field">Estoque MÃ­nimo <span class="text-red-400">*</span></label>
                         <input type="number" id="m_min" name="estoque_minimo" x-model="mat.estoque_minimo" class="input-field" min="0" step="0.001" required>
-                        <?php if ($err = Session::getErrors()['estoque_minimo'][0] ?? null): ?>
+                        <?php if ($err = $errors['estoque_minimo'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
@@ -271,8 +272,8 @@ $breadcrumb = [
 
                 <div>
                     <label for="m_nome" class="label-field">Nome <span class="text-red-400">*</span></label>
-                    <input type="text" id="m_nome" name="nome" x-model="mat.nome" class="input-field" placeholder="Ex: Cabo flexível 2,5mm" required maxlength="120">
-                    <?php if ($err = Session::getErrors()['nome'][0] ?? null): ?>
+                    <input type="text" id="m_nome" name="nome" x-model="mat.nome" class="input-field" placeholder="Ex: Cabo flexÃ­vel 2,5mm" required maxlength="120">
+                    <?php if ($err = $errors['nome'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
                 </div>
@@ -286,7 +287,7 @@ $breadcrumb = [
                                 <option value="<?= $valor ?>"><?= htmlspecialchars($rotulo) ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?php if ($err = Session::getErrors()['categoria'][0] ?? null): ?>
+                        <?php if ($err = $errors['categoria'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
@@ -298,7 +299,7 @@ $breadcrumb = [
                                 <option value="<?= $valor ?>"><?= htmlspecialchars($rotulo) ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?php if ($err = Session::getErrors()['unidade_medida'][0] ?? null): ?>
+                        <?php if ($err = $errors['unidade_medida'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
@@ -312,12 +313,12 @@ $breadcrumb = [
         </div>
     </div>
 
-    <!-- Modal Movimentação -->
+    <!-- Modal MovimentaÃ§Ã£o -->
     <div x-show="movModal" x-transition.opacity.duration.150ms class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-black/60" @click="movModal = false"></div>
         <div x-transition class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl shadow-2xl">
             <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
-                <h3 class="text-lg font-semibold text-white">Registrar Movimentação</h3>
+                <h3 class="text-lg font-semibold text-white">Registrar MovimentaÃ§Ã£o</h3>
                 <button type="button" @click="movModal = false" class="p-2 rounded-lg hover:bg-slate-800 text-slate-400" aria-label="Fechar">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -335,7 +336,7 @@ $breadcrumb = [
                             <option value="<?= $sm->id ?>"><?= htmlspecialchars($sm->codigo_sku . ' - ' . $sm->nome) ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <?php if ($err = Session::getErrors()['material_id'][0] ?? null): ?>
+                    <?php if ($err = $errors['material_id'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
                 </div>
@@ -348,7 +349,7 @@ $breadcrumb = [
                             <option value="<?= $o->id ?>"><?= htmlspecialchars($o->codigo . ' - ' . $o->nome) ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <?php if ($err = Session::getErrors()['obra_id'][0] ?? null): ?>
+                    <?php if ($err = $errors['obra_id'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
                 </div>
@@ -358,22 +359,22 @@ $breadcrumb = [
                         <label for="mv_tipo" class="label-field">Tipo <span class="text-red-400">*</span></label>
                         <select id="mv_tipo" name="tipo" x-model="mov.tipo" class="input-field" required>
                             <option value="entrada">Entrada</option>
-                            <option value="saida">Saída</option>
+                            <option value="saida">SaÃ­da</option>
                         </select>
                     </div>
                     <div>
                         <label for="mv_qtd" class="label-field">Quantidade <span class="text-red-400">*</span></label>
                         <input type="number" id="mv_qtd" name="quantidade" x-model="mov.quantidade" class="input-field" min="0.001" step="0.001" required placeholder="0">
-                        <?php if ($err = Session::getErrors()['quantidade'][0] ?? null): ?>
+                        <?php if ($err = $errors['quantidade'][0] ?? null): ?>
                             <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
 
                 <div>
-                    <label for="mv_obs" class="label-field">Observação</label>
-                    <textarea id="mv_obs" name="observacao" x-model="mov.observacao" class="input-field" rows="3" maxlength="500" placeholder="Ex: NF 12345, consumo no serviço de alvenaria"></textarea>
-                    <?php if ($err = Session::getErrors()['observacao'][0] ?? null): ?>
+                    <label for="mv_obs" class="label-field">ObservaÃ§Ã£o</label>
+                    <textarea id="mv_obs" name="observacao" x-model="mov.observacao" class="input-field" rows="3" maxlength="500" placeholder="Ex: NF 12345, consumo no serviÃ§o de alvenaria"></textarea>
+                    <?php if ($err = $errors['observacao'][0] ?? null): ?>
                         <p class="mt-1 text-sm text-red-400"><?= htmlspecialchars($err) ?></p>
                     <?php endif; ?>
                 </div>

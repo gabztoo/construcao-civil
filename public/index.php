@@ -26,7 +26,9 @@ require_once __DIR__ . '/../src/Modules/Obras/Models/Diario.php';
 require_once __DIR__ . '/../src/Modules/Obras/Controllers/DiarioController.php';
 require_once __DIR__ . '/../src/Modules/Dashboard/Controllers/DashboardController.php';
 require_once __DIR__ . '/../src/Modules/Compras/Models/OrdemCompra.php';
+require_once __DIR__ . '/../src/Modules/Compras/Models/Fornecedor.php';
 require_once __DIR__ . '/../src/Modules/Compras/Controllers/OrdemCompraController.php';
+require_once __DIR__ . '/../src/Modules/Compras/Controllers/FornecedorController.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Funcionario.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Models/Alocacao.php';
 require_once __DIR__ . '/../src/Modules/MaoDeObra/Controllers/FuncionarioController.php';
@@ -80,6 +82,10 @@ $routes = [
         '/compras' => [OrdemCompraController::class, 'store'],
         '/compras/{id:\d+}' => [OrdemCompraController::class, 'update'],
         '/compras/{id:\d+}/delete' => [OrdemCompraController::class, 'destroy'],
+        '/compras/{id:\d+}/status' => [OrdemCompraController::class, 'updateStatus'],
+        '/fornecedores' => [FornecedorController::class, 'store'],
+        '/fornecedores/{id:\d+}' => [FornecedorController::class, 'update'],
+        '/fornecedores/{id:\d+}/delete' => [FornecedorController::class, 'destroy'],
         '/funcionarios' => [FuncionarioController::class, 'store'],
         '/funcionarios/{id:\d+}' => [FuncionarioController::class, 'update'],
         '/funcionarios/{id:\d+}/delete' => [FuncionarioController::class, 'destroy'],
