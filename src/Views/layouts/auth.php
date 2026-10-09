@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'selector',
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -30,13 +30,19 @@
         }
     </script>
     <style>
-        .input-field {
-            @apply w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 
-                   focus:outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-500/20 transition-all;
-        }
-        .btn-primary {
-            @apply w-full py-3 px-4 bg-slate-600 hover:bg-slate-500 text-white font-semibold rounded-lg 
-                   transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500/50 focus:ring-offset-2 focus:ring-offset-slate-950;
+        :root { color-scheme: dark; }
+        select option { background-color: #0f172a; color: #fff; }
+    </style>
+    <style type="text/tailwindcss">
+        @layer components {
+            .input-field {
+                @apply w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500
+                       focus:outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-500/20 transition-all;
+            }
+            .btn-primary {
+                @apply w-full py-3 px-4 bg-slate-600 hover:bg-slate-500 text-white font-semibold rounded-lg
+                       transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500/50 focus:ring-offset-2 focus:ring-offset-slate-950;
+            }
         }
     </style>
 </head>
